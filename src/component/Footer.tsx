@@ -15,7 +15,7 @@ export default function Footer() {
           </span>
         </Link>
         <p className="text-slate-500 text-xs sm:text-sm text-center md:text-right">
-          &copy; 2026 FitLog — Workout Library. Train hard, log honest.
+          &copy; 2026 FitLog — Workout Library. Train hard, log honest..
         </p>
       </div>
     </footer>

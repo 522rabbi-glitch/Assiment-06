@@ -12,7 +12,7 @@ export default function WorkoutCard({ workout }: WorkoutCardProps) {
   return (
     <Link
       href={`/workout/${workout.id}`}
-      className="group bg-[#131926] hover:bg-[#162032] border border-slate-800/90 rounded-2xl overflow-hidden transition-all duration-300 flex flex-col hover:-translate-y-1"
+      className="group bg-[#232d41] hover:bg-[#283753] border border-slate-750/90 rounded-2xl overflow-hidden transition-all duration-300 flex flex-col hover:-translate-y-1"
     >
       {/* Top Image */}
       <div className="relative w-full h-52 bg-slate-900 overflow-hidden">
@@ -46,7 +46,7 @@ export default function WorkoutCard({ workout }: WorkoutCardProps) {
           </h3>
 
           {/* Equipment */}
-          <p className="text-slate-400 text-xs font-medium">
+          <p className="text-slate-450 text-xs font-medium">
             {workout.equipment}
           </p>
         </div>
