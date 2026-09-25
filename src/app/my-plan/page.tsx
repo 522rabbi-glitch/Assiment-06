@@ -42,7 +42,7 @@ export default function MyPlanPage() {
   // Live Sorting (Challenge C1: Duration, Calories, Rating)
   const currentList = [...activeList].sort((a, b) => {
     if (sortBy === "duration") return a.duration - b.duration;
-    if (sortBy === "calories") return b.caloriesBurned - a.caloriesBurned;
+    if (sortBy === "calories") return a.caloriesBurned - b.caloriesBurned;
     if (sortBy === "rating") return b.rating - a.rating;
     return 0;
   });
@@ -176,9 +176,9 @@ export default function MyPlanPage() {
                 onChange={(e) => setSortBy(e.target.value as "duration" | "calories" | "rating")}
                 className="bg-transparent text-white font-semibold pr-6 focus:outline-none cursor-pointer appearance-none text-xs sm:text-sm"
               >
-                <option value="duration" className="bg-[#141b29] text-white">Duration (Low to High)</option>
-                <option value="calories" className="bg-[#141b29] text-white">Calories (High to Low)</option>
-                <option value="rating" className="bg-[#141b29] text-white">Rating (Top Rated)</option>
+                <option value="duration" className="bg-[#141b29] text-white">Duration </option>
+                <option value="calories" className="bg-[#141b29] text-white">Calories </option>
+                <option value="rating" className="bg-[#141b29] text-white">Rating </option>
               </select>
               <ChevronDown className="w-4 h-4 text-slate-400 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
