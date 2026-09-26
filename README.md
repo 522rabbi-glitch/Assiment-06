@@ -6,7 +6,7 @@ A sleek, dark-themed, no-nonsense gym companion and workout planning web applica
 
 ## 🚀 Live Demo & API
 
-- **Live URL:** [FitLog on Vercel](https://your-deployment-link.vercel.app) *(Deploy করার পর আপনার লাইভ লিংকটি এখানে বসাবেন)*
+- **Live URL:** [FitLog on Vercel] `https://assiment-06.vercel.app/`
 - **All Workouts API:** `https://api.abcz.workers.dev/api/fitlog`
 - **Single Workout API:** `https://api.abcz.workers.dev/api/fitlog/:id`
 
