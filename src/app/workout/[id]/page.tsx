@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Workout } from "@/types/workout";
 import { useWorkout } from "@/context/WorkoutContext";
 import { Calendar, Bookmark, ArrowLeft, Check } from "lucide-react";
+import NotFound from "@/app/not-found";
 
 export default function WorkoutDetailsPage() {
   const params = useParams();
@@ -24,14 +25,18 @@ export default function WorkoutDetailsPage() {
     const fetchWorkoutDetails = async () => {
       try {
         setLoading(true);
-        const res = await fetch(
-          `https://api.abcz.workers.dev/api/fitlog/${id}`,
-        );
-        if (!res.ok) throw new Error("Workout not found");
+        const res = await fetch(`https://api.abcz.workers.dev/api/fitlog/${id}`);
+        
+        if (!res.ok) {
+          setWorkout(null);
+          return;
+        }
+        
         const data = await res.json();
         setWorkout(data);
       } catch (err) {
         console.error("Error fetching workout details:", err);
+        setWorkout(null);
       } finally {
         setLoading(false);
       }
@@ -58,18 +63,9 @@ export default function WorkoutDetailsPage() {
     );
   }
 
+ 
   if (!workout) {
-    return (
-      <main className="min-h-screen bg-[#0b0f17] text-slate-100 py-24 text-center">
-        <h2 className="text-2xl font-bold mb-4">Workout Not Found</h2>
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-[#ccff00] hover:underline"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to library
-        </Link>
-      </main>
-    );
+    return <NotFound />;
   }
 
   const alreadyPlanned = isInPlan(workout.id);
@@ -78,6 +74,7 @@ export default function WorkoutDetailsPage() {
   return (
     <main className="min-h-screen bg-[#0b0f17] text-slate-100 py-10 lg:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        
         {/* Back Link */}
         <div>
           <button
@@ -91,14 +88,15 @@ export default function WorkoutDetailsPage() {
 
         {/* Two-Column Details Layout (Strictly Figma Design) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          
           {/* Left Column: Visual / Media */}
           <div className="lg:col-span-6">
-            <div className="relative  aspect-[4/5] sm:aspect-square lg:aspect-[4/5]  bg-slate-900 rounded-3xl overflow-hidden border border-slate-800/80 shadow-2xl">
+            <div className="relative aspect-[4/5] sm:aspect-square lg:aspect-[4/5] bg-slate-900 rounded-3xl overflow-hidden border border-slate-800/80 shadow-2xl">
               <Image
                 src={workout.image}
                 alt={workout.name}
                 width={800}
-                height={950}
+                height={800}
                 priority
                 className="w-full h-full object-cover"
               />
@@ -107,6 +105,7 @@ export default function WorkoutDetailsPage() {
 
           {/* Right Column: Details & Actions */}
           <div className="lg:col-span-6 space-y-8">
+            
             {/* Title & Description */}
             <div className="space-y-4">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-white tracking-tight leading-tight">
@@ -136,17 +135,13 @@ export default function WorkoutDetailsPage() {
                 <span className="text-slate-400 font-bold uppercase tracking-wider text-xs">
                   EQUIPMENT
                 </span>
-                <span className="text-white font-medium">
-                  {workout.equipment}
-                </span>
+                <span className="text-white font-medium">{workout.equipment}</span>
               </div>
               <div className="flex justify-between items-center px-5 py-3.5">
                 <span className="text-slate-400 font-bold uppercase tracking-wider text-xs">
                   DIFFICULTY
                 </span>
-                <span className="text-white font-medium">
-                  {workout.difficulty}
-                </span>
+                <span className="text-white font-medium">{workout.difficulty}</span>
               </div>
               <div className="flex justify-between items-center px-5 py-3.5">
                 <span className="text-slate-400 font-bold uppercase tracking-wider text-xs">
@@ -164,25 +159,19 @@ export default function WorkoutDetailsPage() {
                 <span className="text-slate-400 font-bold uppercase tracking-wider text-xs">
                   DURATION
                 </span>
-                <span className="text-white font-medium">
-                  {workout.duration} min
-                </span>
+                <span className="text-white font-medium">{workout.duration} min</span>
               </div>
               <div className="flex justify-between items-center px-5 py-3.5">
                 <span className="text-slate-400 font-bold uppercase tracking-wider text-xs">
                   CALORIES
                 </span>
-                <span className="text-white font-medium">
-                  {workout.caloriesBurned} kcal
-                </span>
+                <span className="text-white font-medium">{workout.caloriesBurned} kcal</span>
               </div>
               <div className="flex justify-between items-center px-5 py-3.5">
                 <span className="text-slate-400 font-bold uppercase tracking-wider text-xs">
                   RATING
                 </span>
-                <span className="text-[#ccff00] font-bold">
-                  {workout.rating}
-                </span>
+                <span className="text-[#ccff00] font-bold">{workout.rating}</span>
               </div>
             </div>
 
@@ -193,10 +182,7 @@ export default function WorkoutDetailsPage() {
               </h2>
               <ol className="space-y-3">
                 {workout.instructions?.map((step, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-start gap-3.5 text-sm text-slate-300"
-                  >
+                  <li key={idx} className="flex items-start gap-3.5 text-sm text-slate-300">
                     <span className="font-bold text-slate-400 shrink-0">
                       {idx + 1}.
                     </span>
@@ -208,7 +194,6 @@ export default function WorkoutDetailsPage() {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
-              {/* Primary: Add to Today's Plan */}
               <button
                 onClick={() => addToPlan(workout)}
                 className={`flex-1 flex items-center justify-center gap-2.5 font-black text-sm px-6 py-4 rounded-xl transition-all shadow-lg ${
@@ -230,7 +215,6 @@ export default function WorkoutDetailsPage() {
                 )}
               </button>
 
-              {/* Secondary: Save for Later */}
               <button
                 onClick={() => addToSaved(workout)}
                 className={`flex-1 flex items-center justify-center gap-2.5 font-bold text-sm px-6 py-4 rounded-xl transition-all border ${
@@ -252,8 +236,11 @@ export default function WorkoutDetailsPage() {
                 )}
               </button>
             </div>
+
           </div>
+
         </div>
+
       </div>
     </main>
   );
